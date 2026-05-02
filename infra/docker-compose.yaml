@@ -1,0 +1,97 @@
+version: "3.8"
+services:
+  #
+  # Jenkins - automation
+  #
+  jenkins:
+    build:
+      context: .
+      dockerfile:   Dockerfile
+    container_name: jenkins
+    user: tcuser
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    environment:
+      JAVA_OPTS: "-Djenkins.install.runSetupWizard=false"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    depends_on:
+      - gitea
+    networks:
+      - cicd
+
+  #
+  # Gitea - source control
+  #
+  gitea:
+    image: gitea/gitea:latest
+    container_name: gitea
+    restart: unless-stopped
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=sqlite3
+      - GITEA__server__ROOT_URL=http://gitea:3000
+      - GITEA__server__SSH_DOMAIN=gitea
+      - GITEA__server__SSH_PORT=222
+    ports:
+      - "3000:3000"
+      - "222:22"
+    volumes:
+      - gitea_data:/data
+    networks:
+      - cicd
+
+  #
+  # LDAP - IAM
+  #
+  # ldap:
+  #   image: osixia/openldap:1.5.0
+  #   container_name: ldap
+  #   restart: unless-stopped
+  #   environment:
+  #     LDAP_ORGANISATION:   "BPER"
+  #     LDAP_DOMAIN:         "gbbper.it"
+  #     LDAP_ADMIN_PASSWORD: "admin"
+  #   ports:
+  #     - "389:389"
+  #     - "636:636"
+  #   volumes:
+  #     - ldap_data:/var/lib/ldap
+  #     - ldap_config:/etc/ldap/slapd.d
+  #   networks:
+  #     - cicd
+
+  #
+  # LDAP Console - Debug
+  #
+  # phpldapadmin:
+  #   image: osixia/phpldapadmin:0.9.0
+  #   container_name: phpldapadmin
+  #   restart: unless-stopped
+  #   environment:
+  #     PHPLDAPADMIN_LDAP_HOSTS: ldap
+  #     PHPLDAPADMIN_HTTPS: "false"
+  #   ports:
+  #     - "8081:80"
+  #   depends_on:
+  #     - ldap
+  #   networks:
+  #     - cicd
+
+#
+# Define volumes
+#
+volumes:
+  jenkins_home:
+  gitea_data:
+  # ldap_data:
+  # ldap_config:
+
+#
+# Define network
+#
+networks:
+  cicd:
+    driver: bridge
