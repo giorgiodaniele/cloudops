@@ -1,2 +1,5 @@
 scripts
 jenkinsfiles
+*tfstate*
+*terraform.lock*
+.terraform
