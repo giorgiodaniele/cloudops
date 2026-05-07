@@ -1,0 +1,99 @@
+# 
+# BASE STRUCTURE
+# 
+
+dn: ou=ClouOps,dc=gbbper,dc=it
+objectClass: organizationalUnit
+ou: ClouOps
+
+dn: ou=groups,ou=ClouOps,dc=gbbper,dc=it
+objectClass: organizationalUnit
+ou: groups
+
+dn: ou=users,ou=ClouOps,dc=gbbper,dc=it
+objectClass: organizationalUnit
+ou: users
+
+# 
+# USERS
+# 
+
+dn: uid=U83394,ou=users,ou=ClouOps,dc=gbbper,dc=it
+objectClass: inetOrgPerson
+cn:  Alessandro Marino
+sn:  Marino
+uid: U83394
+userPassword: password
+
+dn: uid=U825816,ou=users,ou=ClouOps,dc=gbbper,dc=it
+objectClass: inetOrgPerson
+cn: Giorgio Daniele Luppina
+sn: Luppina
+uid: U825816
+userPassword: password
+
+dn: uid=U72823,ou=users,ou=ClouOps,dc=gbbper,dc=it
+objectClass: inetOrgPerson
+cn: Michele Di Lella
+sn: Lella
+uid: U72823
+userPassword: password
+
+dn: uid=U825693,ou=users,ou=ClouOps,dc=gbbper,dc=it
+objectClass: inetOrgPerson
+cn: Davide Pino
+sn: Pino
+uid: U825693
+userPassword: password
+
+dn: uid=U827253,ou=users,ou=ClouOps,dc=gbbper,dc=it
+objectClass: inetOrgPerson
+cn: Marco Frisoni
+sn: Frisoni
+uid: U827253
+userPassword: password
+
+dn: uid=U827254,ou=users,ou=ClouOps,dc=gbbper,dc=it
+objectClass: inetOrgPerson
+cn: Santo Cariotti
+sn: Cariotti
+uid: U827254
+userPassword: password
+
+
+# 
+# GROUPS
+# 
+
+
+dn: cn=ClouOps_Team_A,ou=profili,ou=ClouOps,dc=gbbper,dc=it
+objectClass: groupOfNames
+cn: ClouOps_Team_A
+member: uid=U827253,ou=users,ou=ClouOps,dc=gbbper,dc=it
+
+dn: cn=ClouOps_Team_B,ou=profili,ou=ClouOps,dc=gbbper,dc=it
+objectClass: groupOfNames
+cn: ClouOps_Team_B
+member: uid=U827253,ou=users,ou=ClouOps,dc=gbbper,dc=it
+
+dn: cn=ClouOps_Team_C,ou=profili,ou=ClouOps,dc=gbbper,dc=it
+objectClass: groupOfNames
+cn: ClouOps_Team_C
+member: uid=U72823,ou=users,ou=ClouOps,dc=gbbper,dc=it
+member: uid=U825693,ou=users,ou=ClouOps,dc=gbbper,dc=it
+member: uid=U827253,ou=users,ou=ClouOps,dc=gbbper,dc=it
+member: uid=U827254,ou=users,ou=ClouOps,dc=gbbper,dc=it
+
+dn: cn=ClouOps_Team_D,ou=profili,ou=ClouOps,dc=gbbper,dc=it
+objectClass: groupOfNames
+cn: ClouOps_Team_D
+member: uid=U72823,ou=users,ou=ClouOps,dc=gbbper,dc=it
+member: uid=U825693,ou=users,ou=ClouOps,dc=gbbper,dc=it
+member: uid=U827254,ou=users,ou=ClouOps,dc=gbbper,dc=it
+
+dn: cn=ClouOps_Team_E,ou=profili,ou=ClouOps,dc=gbbper,dc=it
+objectClass: groupOfNames
+cn: ClouOps_Team_E
+member: uid=U72823,ou=users,ou=ClouOps,dc=gbbper,dc=it
+member: uid=U825693,ou=users,ou=ClouOps,dc=gbbper,dc=it
+member: uid=U827254,ou=users,ou=ClouOps,dc=gbbper,dc=it

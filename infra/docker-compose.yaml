@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   #
-  # Jenkins - automation
+  # Jenkins - server for automation
   #
   jenkins:
     build:
@@ -22,7 +22,7 @@ services:
       - cicd
 
   #
-  # Gitea - source control
+  # Gitea - server for git
   #
   gitea:
     image: gitea/gitea:latest
@@ -44,42 +44,37 @@ services:
       - cicd
 
   #
-  # LDAP - IAM
+  # OpenLDAP - LDAP Server
   #
-  # ldap:
-  #   image: osixia/openldap:1.5.0
-  #   container_name: ldap
-  #   restart: unless-stopped
-  #   environment:
-  #     LDAP_ORGANISATION:   "BPER"
-  #     LDAP_DOMAIN:         "gbbper.it"
-  #     LDAP_ADMIN_PASSWORD: "admin"
-  #   ports:
-  #     - "389:389"
-  #     - "636:636"
-  #   volumes:
-  #     - ldap_data:/var/lib/ldap
-  #     - ldap_config:/etc/ldap/slapd.d
-  #   networks:
-  #     - cicd
+  ldap:
+    image: osixia/openldap:1.5.0
+    container_name: ldap
+    restart: unless-stopped
+    environment:
+      LDAP_ORGANISATION:   "BPER"
+      LDAP_DOMAIN:         "gbbper.it"
+      LDAP_ADMIN_PASSWORD: "admin"
+    ports:
+      - "8082:389"
+    networks:
+      - cicd
 
   #
-  # LDAP Console - Debug
+  # PHP LDAP ADMIN - LDAP Client
   #
-  # phpldapadmin:
-  #   image: osixia/phpldapadmin:0.9.0
-  #   container_name: phpldapadmin
-  #   restart: unless-stopped
-  #   environment:
-  #     PHPLDAPADMIN_LDAP_HOSTS: ldap
-  #     PHPLDAPADMIN_HTTPS: "false"
-  #   ports:
-  #     - "8081:80"
-  #   depends_on:
-  #     - ldap
-  #   networks:
-  #     - cicd
-
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    restart: unless-stopped
+    depends_on:
+      - ldap
+    ports:
+      - "8083:80"
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: ldap
+      PHPLDAPADMIN_HTTPS:      "false"
+    networks:
+      - cicd
 #
 # Define volumes
 #
