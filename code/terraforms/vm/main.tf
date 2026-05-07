@@ -3,7 +3,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-app-dev-weu-01"
+  name     = "rg-vmapp-dev-weu-01"
   location = "norwayeast"
 }
 
